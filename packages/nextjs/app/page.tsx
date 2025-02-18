@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
@@ -16,28 +17,53 @@ const Home: NextPage = () => {
           <h1 className="text-center">
             <span className="block text-2xl mb-2">Welcome to</span>
             <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
+            <span className="block text-xl font-bold">(SpeedRunEthereum Challenge #0 extension)</span>
           </h1>
           <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
             <p className="my-2 font-medium">Connected Address:</p>
             <Address address={connectedAddress} />
           </div>
 
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/app/page.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
+          <div className="flex items-center flex-col flex-grow mt-4">
+            <div className="px-5 w-[90%]">
+              <h1 className="text-center mb-6">
+                <span className="block text-4xl font-bold">Challenge #0: Simple NFT</span>
+              </h1>
+              <div className="flex flex-col items-center justify-center">
+                <Image
+                  src="/hero.png"
+                  width="727"
+                  height="231"
+                  alt="challenge banner"
+                  className="rounded-xl border-4 border-primary"
+                />
+                <div className="max-w-3xl">
+                  <p className="text-center text-lg mt-8">
+                    🎫 Create a simple NFT to learn basics of 🏗️ Scaffold-ETH 2. You'll use 👷‍♀️
+                    <a
+                      href="https://hardhat.org/getting-started/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="underline"
+                    >
+                      HardHat
+                    </a>{" "}
+                    to compile and deploy smart contracts. Then, you'll use a template React app full of important
+                    Ethereum components and hooks. Finally, you'll deploy an NFT to a public network to share with
+                    friends! 🚀
+                  </p>
+                  <p className="text-center text-lg">
+                    🌟 The final deliverable is an app that lets users purchase and transfer NFTs. Deploy your contracts
+                    to a testnet then build and upload your app to a public web server. Submit the url on{" "}
+                    <a href="https://speedrunethereum.com/" target="_blank" rel="noreferrer" className="underline">
+                      SpeedRunEthereum.com
+                    </a>{" "}
+                    !
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">

@@ -37,6 +37,15 @@ contract YourContract {
         _;
     }
 
+    // function onERC721Received(
+    //     address operator,
+    //     address from,
+    //     uint256 tokenId,
+    //     bytes calldata data
+    // ) external override(IERC721Receiver) returns (bytes4){
+    //     return IERC721Receiver.onERC721Received.selector;
+    // }
+
     /**
      * Function that allows anyone to change the state variable "greeting" of the contract and increase the counters
      *
