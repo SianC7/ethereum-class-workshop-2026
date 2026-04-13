@@ -30,14 +30,25 @@ contract YourCollectible is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable 
      */
     function _approve(address to, uint256 tokenId, address auth, bool emitEvent) internal override {
         // TODO: get the currently approved address for the tokenId
+        address previous = getApproved(tokenId);
 
         // TODO: call the _approve logic of the parent ERC721 smart contract
+        super._approve(to, tokenId, auth, emitEvent);
 
         // TODO: if the previous approved is the same as the new approved address return
-
-        // TODO: add the tokenId to the address's approved array
+        if (previous == to) {
+            return;
+        }
 
         // TODO: delete the previous tokenId from the address's approved array
+        if (previous != address(0)) {
+            _deleteAddressApproval(previous, tokenId);
+        }
+
+        // TODO: add the tokenId to the address's approved array
+        if (to != address(0)) {
+            _addressTokenApprovals[to].push(tokenId);
+        }
     }
 
     function approvedBalanceOf(address owner) public view virtual returns (uint256) {
@@ -63,9 +74,9 @@ contract YourCollectible is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable 
     function _deleteAddressApproval(address approvedAddress, uint256 tokenId) private {
         uint256[] memory approvedTokens = _addressTokenApprovals[approvedAddress];
 
-        for (uint256 i=0; i < approvedTokens.length; ++i){
+        for (uint256 i = 0; i < approvedTokens.length; ++i) {
             uint256 approvedTokenId = approvedTokens[i];
-            if (tokenId == approvedTokenId){
+            if (tokenId == approvedTokenId) {
                 // put the last tokenId into the position of the deleted
                 _addressTokenApprovals[approvedAddress][i] = approvedTokens[approvedTokens.length - 1];
 
@@ -81,7 +92,11 @@ contract YourCollectible is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable 
         super._increaseBalance(account, value);
     }
 
-    function _update(address to, uint256 tokenId, address auth) internal override(ERC721, ERC721Enumerable) returns (address) {
+    function _update(
+        address to,
+        uint256 tokenId,
+        address auth
+    ) internal override(ERC721, ERC721Enumerable) returns (address) {
         return super._update(to, tokenId, auth);
     }
 
