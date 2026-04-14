@@ -9,6 +9,7 @@ describe("StakingContract", function () {
   let stakingContract: StakingContract, stakingContractAddress: string;
   let attackerContract: AttackerContract;
   let owner: HardhatEthersSigner, user1: HardhatEthersSigner, user2: HardhatEthersSigner, user3: HardhatEthersSigner;
+
   before(async () => {
     // Get the Signers object from ethers
     [owner, user1, user2, user3] = await ethers.getSigners();
@@ -82,6 +83,7 @@ describe("StakingContract", function () {
       expect(await ethers.provider.getBalance(user1.address)).to.equal(
         user1BalETH + ethers.parseUnits("20", "ether") - gasCostForTxn,
       );
+      expect(await stakingContract.getUserCount()).to.equal(1);
     });
 
     // it("Should allow a re-entry attack", async function () {
