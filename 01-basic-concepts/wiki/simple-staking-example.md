@@ -73,6 +73,8 @@ yarn workspace @se-2/hardhat test test/StakingContract.ts
 
 - [ ] **TODO:** Use `require` to check that the transfer succeeded.
 
+<img width="951" height="822" alt="image" src="https://github.com/user-attachments/assets/918933a9-4a31-49a7-a12d-9aafa58be0f6" />
+
 ### 3. `_delete` (suite: **Withdrawals**)
 
 - [ ] **TODO:** Load the user struct into memory.
