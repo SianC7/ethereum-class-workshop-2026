@@ -106,4 +106,4 @@ File: `packages/nextjs/app/myNFTs/_components/MyHoldings.tsx`.
 ## Reference
 
 - Upstream wiki: [Simple UI Example](https://github.com/FinHubSA/ethereum-class-workshop-2025/wiki/Simple-UI-Example)
-- Lesson setup: [setup.md](./setup.md)
+- Lesson guide: [README.md](./README.md)

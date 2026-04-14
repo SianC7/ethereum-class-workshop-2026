@@ -69,4 +69,4 @@ In **`Should allow transfer from non-owner user1 after approving them`** (and re
 ## Reference
 
 - Upstream wiki: [Simple NFT Example](https://github.com/FinHubSA/ethereum-class-workshop-2025/wiki/Simple-NFT-Example)
-- Lesson setup: [setup.md](./setup.md)
+- Lesson guide: [README.md](./README.md)
