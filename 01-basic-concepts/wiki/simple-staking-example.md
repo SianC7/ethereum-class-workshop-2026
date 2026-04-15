@@ -88,6 +88,8 @@ yarn workspace @se-2/hardhat test test/StakingContract.ts
 
 ### 4. Re-entrancy exercise
 
+<img width="668" height="427" alt="image" src="https://github.com/user-attachments/assets/bb139b3b-ce89-4b6d-8017-fae5f2728154" />
+
 A **re-entrancy** attack happens when external code calls back into your contract before the first call finishes, often draining funds because balances were not updated before the external call.
 
 - [ ] **TODO:** Remove the `lock` modifier from `withdraw`.
