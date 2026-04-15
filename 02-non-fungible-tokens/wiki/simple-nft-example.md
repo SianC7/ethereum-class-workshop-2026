@@ -71,21 +71,22 @@ Run the tests again. The case **`Should not allow minting to contract address wi
 
   (From `packages/hardhat`: `yarn test test/YourCollectible.ts` after deploy if you prefer.)
 
-### 3. Transfers and approvals (suite: **Transfer**)
+### 3. Fix `_approve` in `YourCollectible.sol`
 
-In **`Should allow transfer from non-owner user1 after approving them`** (and related cases):
+Implemented in `packages/hardhat/contracts/YourCollectible.sol` (override of OpenZeppelin’s internal `_approve`).
 
-- [ ] **TODO:** Write a test that **user1 cannot** transfer the token they helped mint for **user2** without permission.  
-       _Hint:_ `tokenId_0` belongs to **user2**. Connect as **user1** and attempt to transfer user2’s token to user3; expect revert.
+- [ ] **TODO:** Read the **currently approved** address for `tokenId`.  
+      _Note:_ You need the previous approvee to remove `tokenId` from tracking when approvals change.
 
-- [ ] **TODO:** As **user2**, call **`approve`** on `yourCollectible` so **user1** is allowed to move **`tokenId_0`**.  
-       _Note:_ `approve(to, tokenId)` lets `to` transfer that `tokenId` until it is transferred or approval is cleared. Only one approved spender per token at a time; approving the zero address clears approval.
+- [ ] **TODO:** Call the **parent** `ERC721` `_approve` logic (OpenZeppelin’s internal implementation).
 
-- [ ] **TODO:** As **user1**, transfer **`tokenId_0`** from user2 to **user3** (e.g. `transferFrom` / `safeTransferFrom` as appropriate).
+- [ ] **TODO:** If the previous approved address equals the **new** approved address, **return** early.  
+      _Note:_ Avoid duplicate work / redundant updates when nothing changes.
 
-- [ ] **TODO:** Assert the owner of **`tokenId_0`** is **user3**.
+- [ ] **TODO:** Add `tokenId` to the **new** approver’s list in `_addressTokenApprovals`.  
+      _Note:_ Do not treat the zero address as a real approver for this bookkeeping.
 
-- [ ] **TODO:** Assert **user2** owns **no** tokens (e.g. `balanceOf(user2) === 0`).
+- [ ] **TODO:** Remove `tokenId` from the **previous** approver’s array in `_addressTokenApprovals`.
 
 ---
 
