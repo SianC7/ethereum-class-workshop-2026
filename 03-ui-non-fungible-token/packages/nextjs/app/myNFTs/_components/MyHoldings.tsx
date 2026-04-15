@@ -18,10 +18,10 @@ export const MyHoldings = () => {
   const { address: connectedAddress } = useAccount();
 
   const [myAllCollectibles, setMyAllCollectibles] = useState<Collectible[]>([]);
-  // TODO: create a state variable called myApprovedCollectibles of typle Collectible[]
+  const [myApprovedCollectibles, setMyApprovedCollectibles] = useState<Collectible[]>([]);
 
   const [allCollectiblesLoading, setAllCollectiblesLoading] = useState(false);
-  // TODO: create a state variable called approvedCollectiblesLoading of type bool
+  const [approvedCollectiblesLoading, setApprovedCollectiblesLoading] = useState(false);
 
   const { data: yourCollectibleContract } = useScaffoldContract({
     contractName: "YourCollectible",
@@ -83,10 +83,52 @@ export const MyHoldings = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connectedAddress, myTotalBalance]);
 
-  // TODO: create a useEffect Hook to get approved tokens and update the myApprovedCollectibles state variable
+  useEffect(() => {
+    const updateMyCollectibles = async (): Promise<void> => {
+      if (myApprovedBalance === undefined || yourCollectibleContract === undefined || connectedAddress === undefined)
+        return;
 
-  // TODO: use approvedCollectiblesLoading in the loading element
-  if (allCollectiblesLoading)
+      setApprovedCollectiblesLoading(true);
+      const collectibleUpdate: Collectible[] = [];
+      const totalBalance = parseInt(myApprovedBalance.toString());
+      for (let tokenIndex = 0; tokenIndex < totalBalance; tokenIndex++) {
+        try {
+          const tokenId = await yourCollectibleContract.read.approvedTokenByIndex([
+            connectedAddress,
+            BigInt(tokenIndex),
+          ]);
+
+          // get the token owner
+          const tokenOwner = await yourCollectibleContract.read.ownerOf([tokenId]);
+
+          const tokenURI = await yourCollectibleContract.read.tokenURI([tokenId]);
+
+          const ipfsHash = tokenURI.replace("https://ipfs.io/ipfs/", "");
+
+          const nftMetadata: NFTMetaData = await getMetadataFromIPFS(ipfsHash);
+
+          collectibleUpdate.push({
+            id: parseInt(tokenId.toString()),
+            uri: tokenURI,
+            owner: tokenOwner,
+            ...nftMetadata,
+          });
+        } catch (e) {
+          notification.error("Error fetching all collectibles");
+          setApprovedCollectiblesLoading(false);
+          console.log(e);
+        }
+      }
+      collectibleUpdate.sort((a, b) => a.id - b.id);
+      setMyApprovedCollectibles(collectibleUpdate);
+      setApprovedCollectiblesLoading(false);
+    };
+
+    updateMyCollectibles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connectedAddress, myApprovedBalance]);
+
+  if (allCollectiblesLoading || approvedCollectiblesLoading)
     return (
       <div className="flex justify-center items-center mt-10">
         <span className="loading loading-spinner loading-lg"></span>
@@ -102,7 +144,7 @@ export const MyHoldings = () => {
       ) : (
         <div className="flex flex-col items-center grow">
           <div className="badge badge-soft badge-primary text-lg p-4 text-nowrap">Owned NFTs</div>
-          <div className="flex flex-wrap gap-4 my-4 px-2">
+          <div className="flex flex-wrap gap-4 my-8 px-5">
             {myAllCollectibles.map(item => (
               <NFTCard nft={item} key={item.id} />
             ))}
@@ -110,9 +152,22 @@ export const MyHoldings = () => {
         </div>
       )}
 
-      {/* <div className="divider divider-horizontal"></div> */}
+      <div className="divider divider-horizontal"></div>
 
-      {/* TODO: copy the conditional element above for myAllCollectibles and use it for myApprovedCollectibles */}
+      {myApprovedCollectibles.length === 0 ? (
+        <div className="flex flex-col items-center">
+          <div className="badge badge-soft badge-primary text-lg p-4 text-nowrap">Approved NFTs</div>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center grow">
+          <div className="badge badge-soft badge-primary text-lg p-4 text-nowrap">Approved NFTs</div>
+          <div className="flex flex-wrap gap-4 my-8 px-5">
+            {myApprovedCollectibles.map(item => (
+              <NFTCard nft={item} key={item.id} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
