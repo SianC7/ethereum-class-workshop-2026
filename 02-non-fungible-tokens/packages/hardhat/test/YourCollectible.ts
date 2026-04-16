@@ -10,11 +10,8 @@ describe("YourCollectible", function () {
   let yourCollectible: YourCollectible, yourCollectibleAddress: string;
   let yourContract: YourContract, yourContractAddress: string;
   let owner: HardhatEthersSigner, user1: HardhatEthersSigner, user2: HardhatEthersSigner, user3: HardhatEthersSigner;
-<<<<<<<< HEAD:03-ui-non-fungible-token/packages/hardhat/test/YourCollectible.ts
   let tokenId_0: number, tokenId_1: number;
-========
-  let tokenId_0: number;
->>>>>>>> cec28ec0611be0e121df44f0ec30a2ce84f1ef19:02-non-fungible-tokens/packages/hardhat/test/YourCollectible.ts
+
   before(async () => {
     // Get the Signers object from ethers
     [owner, user1, user2, user3] = await ethers.getSigners();
@@ -67,7 +64,6 @@ describe("YourCollectible", function () {
 
   describe("Transfer", function () {
     it("Should not allow transfer from non-owner user1", async function () {
-<<<<<<<< HEAD:03-ui-non-fungible-token/packages/hardhat/test/YourCollectible.ts
       await expect(yourCollectible.connect(user1).transferFrom(user2.address, user3.address, tokenId_0)).to.be.reverted;
     });
 
@@ -81,23 +77,6 @@ describe("YourCollectible", function () {
       expect(await yourCollectible.connect(user1).ownerOf(tokenId_0)).to.equal(user3.address);
       expect(await yourCollectible.connect(user1).balanceOf(user2.address)).to.equal(0);
       expect(await yourCollectible.connect(user1).balanceOf(user3.address)).to.equal(1);
-========
-      // TODO: write a test to check that user 1 cannot transfer the token they created for user 2
-
-      expect(true).to.equal(false);
-    });
-
-    it("Should allow transfer from non-owner user1 after approving them", async function () {
-      // TODO: call yourCollectible SM and have user 2 to approve/authorize user 1 to transfer the token on their behalf
-
-      // TODO: call yourCollectibe and have user 1 transfer user 2 token to user 3
-
-      // TODO: write a test to check that the owner of the token is currently user 3
-
-      // TODO: write a test to check that user 2 has no token that they own
-
-      expect(true).to.equal(false);
->>>>>>>> cec28ec0611be0e121df44f0ec30a2ce84f1ef19:02-non-fungible-tokens/packages/hardhat/test/YourCollectible.ts
     });
 
     it("Should add approved to the approved list", async function () {

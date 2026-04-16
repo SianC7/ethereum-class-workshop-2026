@@ -1,55 +1,78 @@
-# Ethereum class workshop (2026)
+# Home
 
-Monorepo for the **Fintech and Cryptocurrencies** Ethereum practicals. Each numbered folder is a full **[Scaffold-ETH 2](https://scaffoldeth.io)** app (Hardhat + Next.js) you run on its own.
+## Welcome
 
-## Documentation
+Welcome to the wiki for **Fintech and Cryptocurrencies** (Ethereum track). These pages are adapted for **this monorepo** (three standalone lessons).
 
-- **[Course wiki →](wiki/README.md)** — setup notes, Solidity basics, and copied practicals (staking, NFT, UI). Start here for reading and navigation.
-- **Lesson wikis** — each lesson has extra paths and checklists:
-  - [Lesson 01](01-basic-concepts/wiki/README.md)
-  - [Lesson 02](02-non-fungible-tokens/wiki/README.md)
-  - [Lesson 03](03-ui-non-fungible-token/wiki/README.md)
+Attention: These pages are all work in progress and will be updated prior to the class! Once the update is complete, it will be announced here.
 
-## Lessons
+The course is intended to teach you smart contract programming and deployment for the blockchain technology Ethereum. There will be a brief introduction into blockchain technology in general, a setup, development, and a deploy part. After completing all the reading and tutorials within this wiki, you should have the tools to start your own blockchain based project on Ethereum using the Scaffold-Eth development tools.
 
-| # | Folder | Focus |
-|---|--------|--------|
-| 1 | [`01-basic-concepts/`](01-basic-concepts/) | Staking contract, tests, re-entrancy |
-| 2 | [`02-non-fungible-tokens/`](02-non-fungible-tokens/) | ERC-721, minting, transfers |
-| 3 | [`03-ui-non-fungible-token/`](03-ui-non-fungible-token/) | Approvals, My NFTs UI, Sepolia |
+If you have any issues, or run into any problems, please contact Takunda Chirema: [takunda.chirema@uct.ac.za](mailto:takunda.chirema@uct.ac.za)
 
-Work through them in order. Open the lesson **README** in each folder for Scaffold-ETH quickstart and links.
+Credit to [Sabine Schaler](https://github.com/cogeorg/teaching/wiki/Fintech-and-Cryptocurrencies)
 
-## Quick start (any lesson)
+---
 
-```bash
-cd 01-basic-concepts   # or 02-… / 03-…
-yarn install
-```
+## This repository (monorepo)
 
-Then, in separate terminals from that same folder:
+Each lesson is its own Scaffold-ETH 2 app:
 
-```bash
-yarn chain
-yarn deploy
-yarn start
-```
+| Lesson | Folder                                                   | Local practical write-up                                     |
+| ------ | -------------------------------------------------------- | ------------------------------------------------------------ |
+| 1      | [`01-basic-concepts/`](01-basic-concepts/)               | [Simple Staking Example](01-basic-concepts/wiki/README.md)   |
+| 2      | [`02-non-fungible-tokens/`](02-non-fungible-tokens/)     | [Simple NFT Example](02-non-fungible-tokens/wiki/README.md)  |
+| 3      | [`03-ui-non-fungible-token/`](03-ui-non-fungible-token/) | [Simple UI Example](03-ui-non-fungible-token/wiki/README.md) |
 
-Open [http://localhost:3000](http://localhost:3000).
+In each lesson directory: `yarn install`, then `yarn chain`, `yarn deploy`, and `yarn start`. Each lesson also has its own `wiki/` with shortcuts and paths - start from **`wiki/README.md`** inside that folder.
 
-## Requirements
+Suggested order: **Lesson 1 -> Lesson 2 -> Lesson 3**.
 
-- **Node.js** ≥ 18.18 (see each lesson’s `package.json` / README)
-- **Yarn** (lessons use Yarn 3)
-- **Git**
+---
 
-## Contact
+## Table of contents
 
-**Takunda Chirema** — [takunda.chirema@uct.ac.za](mailto:takunda.chirema@uct.ac.za)
+### Basics
 
-Course material builds on work by **Sabine Schaler** and the [FinHubSA ethereum-class-workshop-2025](https://github.com/FinHubSA/ethereum-class-workshop-2025/wiki) wiki, mirrored and adapted in [`wiki/`](wiki/).
+- [Terminal](wiki/terminal.md)
+- [Git](wiki/git.md)
 
-## Links
+### Setup
 
-- [Scaffold-ETH 2 docs](https://docs.scaffoldeth.io)
-- [Solidity docs](https://docs.soliditylang.org/)
+- [Installing NodeJS and Yarn](wiki/installing-nodejs-and-yarn.md)
+- [Installing an Editor](wiki/installing-an-editor.md)
+- [Forking the 2026 Repository](wiki/forking-the-2026-repository.md)
+
+### Ethereum
+
+- [Introduction to Ethereum](wiki/introduction-to-ethereum.md)
+
+#### Tool installation and introduction
+
+- [Scaffold-ETH](wiki/scaffold-eth.md)
+- [Setup](wiki/setup.md)
+
+#### Introduction to Solidity
+
+- [Basic Concepts](wiki/basic-concepts.md)
+- [Data Types](wiki/data-types.md)
+- [Functions](wiki/functions.md)
+- [Contracts](wiki/contracts.md)
+
+#### Practicals
+
+- [Simple Staking Example](01-basic-concepts/wiki/README.md) - lesson folder: `01-basic-concepts/`
+- [Simple NFT Example](02-non-fungible-tokens/wiki/README.md) - lesson folder: `02-non-fungible-tokens/`
+- [Simple UI Example](03-ui-non-fungible-token/wiki/README.md) - lesson folder: `03-ui-non-fungible-token/`
+
+#### Assignment
+
+Assignment briefs and submission details are published by your course instructor (e.g. on Vula or in class).
+
+---
+
+## External references (not duplicated here)
+
+- [Scaffold-ETH 2 documentation](https://docs.scaffoldeth.io)
+- [Scaffold-ETH 2 website](https://scaffoldeth.io)
+- [Solidity documentation](https://docs.soliditylang.org/)
