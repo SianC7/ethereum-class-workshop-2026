@@ -6,11 +6,12 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+// Create a contract that inherits functionality from Openzeppelin's ERC721, ERC721Enumerable, ERC721URIStorage and Ownable smart contracts
 contract YourCollectible is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
     uint256 public tokenIdCounter;
-    mapping(address => uint256[]) private _addressTokenApprovals;
+    mapping(address => uint256[]) private _addressTokenApprovals; // Value associated with the address key is a dynamic array of uint256 integers
 
-    constructor() ERC721("Bantu", "BT") Ownable(msg.sender) {} // Pass the owner address to the Ownable constructor
+    constructor() ERC721("Bantu", "BT") Ownable(msg.sender) {} // ERC721(name of colleciton, symbol of collection). Pass the owner address to the Ownable constructor
 
     function _baseURI() internal pure override returns (string memory) {
         return "https://ipfs.io/ipfs/";
@@ -24,18 +25,22 @@ contract YourCollectible is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable 
 
         uint256 tokenId = tokenIdCounter; // Get the current token ID from the counter
 
-        /**
         // TODO: use _mint to create/mint an NFT
-        // TODO: use _setTokenURI to set the metadata source for the NFT
-        // TODO: increament the tokenIdCounter
-        tokenIdCounter++;
 
-        */
+        //_mint(to, tokenId); // Call the _mint function from the parent ERC721 contract to mint the token to the specified address with the current token ID
 
         // TODO: Switch from _mint to _safeMint.
         /** Why: _safeMint checks that the recipient can handle ERC-721 tokens via 
         onERC721Received. Minting to a contract that does not implement IERC721Receiver 
         can lock the NFT in that contract with no way to transfer it out. */
+
+        _safeMint(to, tokenId);
+
+        // TODO: use _setTokenURI to set the metadata source for the NFT
+        _setTokenURI(tokenId, uri);
+
+        // TODO: increament the tokenIdCounter
+        tokenIdCounter++;
 
         return tokenId;
     }
@@ -46,9 +51,21 @@ contract YourCollectible is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable 
      */
     function _approve(address to, uint256 tokenId, address auth, bool emitEvent) internal override {
         // TODO: get the currently approved address for the tokenId
+        address currentApproved = getApproved(tokenId); // getApproved is an internal function of ERC721 that returns the approved address for a token ID, or zero if no address set
+
         // TODO: call the _approve logic of the parent ERC721 smart contract
+        /** _approve is an internal function responsible for setting the allowance, 
+        which is the amount of tokens a third party (spender) is permitted to move on behalf of the token owner. 
+        It is the internal, foundational logic called by the public approve function */
+        // Call super is your smart contract has a method that has the same name as the parent
+        super._approve(to, tokenId, auth, emitEvent);
+
         // TODO: if the previous approved is the same as the new approved address return
+        if (currentApproved == to) {
+            return;
+        }
         // TODO: add the tokenId to the address's approved array
+        _addressTokenApprovals[to].push(tokenId);
         // TODO: delete the previous tokenId from the address's approved array
     }
 
