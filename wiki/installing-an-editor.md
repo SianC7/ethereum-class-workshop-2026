@@ -48,3 +48,19 @@ sudo snap install --classic code
 3. Click on Install.
 
 Done! The solidity extension by Juan Blanco will facilitate writing solidity code due to syntax highlighting and linting, among other features.
+
+## Enable Format On Save in VS Code
+
+To automatically format code whenever you save a file:
+
+1. Open **Settings** in VS Code (`Cmd + ,` on macOS or `Ctrl + ,` on Windows/Linux).
+2. Search for **Format On Save**.
+3. Tick the checkbox for **Editor: Format On Save**.
+
+You can also set it directly in `settings.json`:
+
+```json
+{
+  "editor.formatOnSave": true
+}
+```
