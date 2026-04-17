@@ -2,9 +2,9 @@
 // compiler version must be greater than or equal to 0.8.26 and less than 0.9.0
 
 // StakingContract.sol is a small contract where users add ETH to a staking pool.
-// Contributions are stored on-chain; users can withdraw at any time. 
+// Contributions are stored on-chain; users can withdraw at any time.
 // A user may join only once until they withdraw—after withdrawal they can join again.
-// Tests are in packages/hardhat/test/StakingContract.ts. 
+// Tests are in packages/hardhat/test/StakingContract.ts.
 // (We are doing test driven development, so the tests are written before the implementation of the functions in the contract.)
 
 pragma solidity >=0.8.26 <0.9.0;
@@ -126,11 +126,11 @@ contract StakingContract {
     /**
      * Function that allows users to store Ether in the smart contract
      */
-    function addUser(string memory _name, uint8 _age, Ethnicity ethnicity) public payable{
+    function addUser(string memory _name, uint8 _age, Ethnicity ethnicity) public payable {
         // TODO: make sure the function can receive ether -> add payable to the function signature
 
         // TODO: use require to check if the user sent ether in the calling transaction:
-        // msg is a global variable in Solidity that contains information about the current transaction, 
+        // msg is a global variable in Solidity that contains information about the current transaction,
         // including the amount of Ether sent with the transaction (msg.value).
         require(msg.value > 0, "The staking value is 0");
 
@@ -150,7 +150,7 @@ contract StakingContract {
             index: userAddresses.length,
             exists: true
         });
-        
+
         // TODO: store the user in the users key value mapping
         users[msg.sender] = user; // user object already made in memory, so we can directly assign it to the mapping and persistent storage
 
@@ -171,7 +171,8 @@ contract StakingContract {
      * Function that allows the users to withdraw all the Ether they deposited in the smart contract
      */
     function withdraw() external lock {
-        // TODO: get the amount to be withdrawn 
+        // LOOK AT SOLUTIONS
+        // TODO: get the amount to be withdrawn
         // TODO: use require to check if the user has any money to withdraw
         User memory user = users[msg.sender];
         require(user.exists, "User does not exist"); // Check if the user exists before allowing withdrawal
@@ -179,15 +180,15 @@ contract StakingContract {
 
         // TODO: uncomment below to view print log messages during testing
         string memory name = users[msg.sender].name;
-        console.log(string.concat(name, ' <-> withdrawing '));
+        console.log(string.concat(name, " <-> withdrawing "));
 
         // TODO: use the call function on an address object to send Ether to the user
         // For sending money from a contract
-        (bool success, ) = msg.sender.call{value: user.balance}(""); //!!!
+        (bool success, ) = msg.sender.call{ value: user.balance }(""); //!!!
         user.balance = 0; // Update the user's balance to 0 after attempting withdrawal
 
         // TODO: uncomment below to log if withdrawal fails
-        console.log(success ? "withdrawal successful": "withdrawal failed");
+        console.log(success ? "withdrawal successful" : "withdrawal failed");
 
         // TODO: use require to check if the transfer was successful
         require(success, "Withdrawal failed");
@@ -202,7 +203,7 @@ contract StakingContract {
     function _delete(address userAddress) internal {
         // TODO: uncomment this to check for user existence
         // NOTE: We could have used require, but we can't illustrate the attack because the sm logic would fail after the first recursive withdrawal
-        if (!users[userAddress].exists){
+        if (!users[userAddress].exists) {
             return;
         }
         // TODO: get the user object into memory

@@ -28,7 +28,7 @@ contract AttackerContract {
         console.log("** fallback");
     }
 
-    // Receive is a variant of fallback that is triggered when msg.data is empty
+    // Receive is a variant of fallback function that is triggered when msg.data is empty
     receive() external payable {
         console.log("attacker balance -> ", Strings.toString(address(this).balance));
         console.log("contract balance -> ", Strings.toString(address(target).balance));

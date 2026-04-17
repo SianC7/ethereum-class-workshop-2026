@@ -48,25 +48,33 @@ contract YourCollectible is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable 
     /**
         Override internal lower level _approve
         This function sets _addressTokenApprovals so that we can track and enumerate the approved tokens for each token
+        _approve gives the to address custodianship of the tokenId token
      */
     function _approve(address to, uint256 tokenId, address auth, bool emitEvent) internal override {
         // TODO: get the currently approved address for the tokenId
-        address currentApproved = getApproved(tokenId); // getApproved is an internal function of ERC721 that returns the approved address for a token ID, or zero if no address set
+        address newTokenCustodian = to;
+        address currentApprovedCustodian = getApproved(tokenId); // getApproved is an internal function of ERC721 that returns the approved address for a token ID, or zero if no address set
 
         // TODO: call the _approve logic of the parent ERC721 smart contract
         /** _approve is an internal function responsible for setting the allowance, 
         which is the amount of tokens a third party (spender) is permitted to move on behalf of the token owner. 
         It is the internal, foundational logic called by the public approve function */
-        // Call super is your smart contract has a method that has the same name as the parent
-        super._approve(to, tokenId, auth, emitEvent);
+        // Call super (parents version of the function) is your smart contract has a method that has the same name as the parent
+        super._approve(newTokenCustodian, tokenId, auth, emitEvent);
 
         // TODO: if the previous approved is the same as the new approved address return
-        if (currentApproved == to) {
+        if (currentApprovedCustodian == newTokenCustodian) {
             return;
         }
         // TODO: add the tokenId to the address's approved array
-        _addressTokenApprovals[to].push(tokenId);
-        // TODO: delete the previous tokenId from the address's approved array
+        if (newTokenCustodian != address(0)) {
+            // Only add to the approved array if the new approved address is not the zero address.
+            // If the new approved address is the zero address, it means we are revoking approval, so we should not add the tokenId to the zero address's approved array
+            _addressTokenApprovals[newTokenCustodian].push(tokenId);
+        }
+
+        // TODO: delete the previous tokenId from the address's previously approved array
+        _deleteAddressApproval(currentApprovedCustodian, tokenId);
     }
 
     function approvedBalanceOf(address owner) public view virtual returns (uint256) {
